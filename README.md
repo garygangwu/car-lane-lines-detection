@@ -7,7 +7,9 @@ When we drive, we use our eyes to decide where to go.  The lines on the road tha
 
 This repo contains my solution to Udacity's self-drving course project, [Finding Lane Lines on the Road](https://github.com/udacity/CarND-LaneLines-P1)
 
-
+- [White Lanes Video](https://www.dropbox.com/s/bw9gah8jrgmcqth/solidWhiteRight.mp4?dl=0)
+- [Yellow Lanes Video](https://www.dropbox.com/s/penftep9t5ly1r2/solidYellowLeft.mp4?dl=0)
+- [Challenge Video](https://www.dropbox.com/s/bxpq2a8tralfqwt/challenge.mp4?dl=0)
 
 ## Pipeline Description
 
