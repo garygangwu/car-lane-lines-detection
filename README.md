@@ -1,13 +1,13 @@
 # **Finding Lane Lines on the Road** 
 
 ## Overview
----
+
 
 When we drive, we use our eyes to decide where to go.  The lines on the road that show us where the lanes are act as our constant reference for where to steer the vehicle.  Naturally, one of the first things we would like to do in developing a self-driving car is to automatically detect lane lines using an algorithm.
 
 This repo contains my solution to Udacity's self-drving course project, [Finding Lane Lines on the Road](https://github.com/udacity/CarND-LaneLines-P1)
 
----
+
 
 ## Pipeline Description
 
@@ -144,7 +144,6 @@ The video is processed as a stream of individual images
 - [Yellow Lanes Video](https://www.dropbox.com/s/penftep9t5ly1r2/solidYellowLeft.mp4?dl=0)
 - [Challenge Video](https://www.dropbox.com/s/bxpq2a8tralfqwt/challenge.mp4?dl=0)
 
----
 
 ## Potential Issues with the current pipeline
 The project was reasonably detect lanes in the videos, however there are a lot more thing that can be improved
