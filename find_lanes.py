@@ -9,17 +9,29 @@ import math
 from moviepy.editor import VideoFileClip
 
 def keep_only_line_color(img):
-  lower = np.array([190,190,0])
-  upper = np.array([255,255,255])
-  yellow_mask = cv2.inRange(img, lower, upper)
+  # lower = np.array([190,190,0])
+  # upper = np.array([255,255,255])
+  # yellow_mask = cv2.inRange(img, lower, upper)
 
-  lower = np.array([200,200,200])
+  # lower = np.array([200,200,200])
+  # upper = np.array([255,255,255])
+  # white_mask = cv2.inRange(img, lower, upper)
+
+  # mask = cv2.bitwise_or(yellow_mask, white_mask)
+
+  # return cv2.bitwise_and(img, img, mask = mask)
+  converted_img = cv2.cvtColor(img, cv2.COLOR_RGB2HLS)
+  lower = np.array([ 10,  0,100])
+  upper = np.array([ 40,255,255])
+  yellow_mask = cv2.inRange(converted_img, lower, upper)
+
+  lower = np.array([  0, 200, 0])
   upper = np.array([255,255,255])
-  white_mask = cv2.inRange(img, lower, upper)
+  white_mask = cv2.inRange(converted_img, lower, upper)
 
   mask = cv2.bitwise_or(yellow_mask, white_mask)
 
-  return cv2.bitwise_and(img, img, mask = mask)
+  return cv2.bitwise_and(converted_img, converted_img, mask = mask)
 
 
 def grayscale(img):
@@ -174,7 +186,6 @@ def process_image(image, file_name=''):
   line_image = np.copy(image)*0
   draw_lines(line_image, lines, color=[255, 0, 0], thickness=5)
   weighted_image = weighted_img(line_image, image)
-  #weighted_image = weighted_img(line_image, cv2.cvtColor(masked_edges,cv2.COLOR_GRAY2RGB))
 
   return weighted_image
 
