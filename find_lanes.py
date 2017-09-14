@@ -165,28 +165,32 @@ def lines_optimization(lines, x_max_len, y_max_len):
       m, b = get_m_and_b_from_line(bottom_right)
       new_y = bottom_left_y
       new_x = int((new_y - b) * 1.0 / m)
-      new_bottom_right_1 = np.array([bottom_right[0], bottom_right[1], new_x, new_y])
+      bottom_right[2], bottom_right[3] = new_x, new_y
+      #new_bottom_right_1 = np.array([bottom_right[0], bottom_right[1], new_x, new_y])
       if len(right_lines) > 1:
         bottom_right = right_lines[-2][0]
         m, b = get_m_and_b_from_line(bottom_right)
         new_y = bottom_left_y
         new_x = int((new_y - b) * 1.0 / m)
-        new_bottom_right_2 = np.array([bottom_right[0], bottom_right[1], new_x, new_y])
-        left_lines.append(np.array([new_bottom_right_2]))
-      right_lines.append(np.array([new_bottom_right_1]))
+        #new_bottom_right_2 = np.array([bottom_right[0], bottom_right[1], new_x, new_y])
+        bottom_right[2], bottom_right[3] = new_x, new_y
+        #left_lines.append(np.array([new_bottom_right_2]))
+      #right_lines.append(np.array([new_bottom_right_1]))
     else:
       m, b = get_m_and_b_from_line(bottom_left)
       new_y = bottom_right_y
       new_x = int((new_y - b) * 1.0 / m)
-      new_bottom_left_1 = np.array([bottom_left[2], bottom_left[3], new_x, new_y])
+      bottom_left[2], bottom_left[3] = new_x, new_y
+      #new_bottom_left_1 = np.array([bottom_left[2], bottom_left[3], new_x, new_y])
       if len(left_lines) > 1:
         bottom_left = left_lines[-2][0]
         m, b = get_m_and_b_from_line(bottom_left)
         new_y = bottom_right_y
         new_x = int((new_y - b) * 1.0 / m)
-        new_bottom_left_2 = np.array([bottom_left[0], bottom_left[1], new_x, new_y])
-        left_lines.append(np.array([new_bottom_left_2]))
-      left_lines.append(np.array([new_bottom_left_1]))
+        bottom_left[2], bottom_left[3] = new_x, new_y
+        #new_bottom_left_2 = np.array([bottom_left[0], bottom_left[1], new_x, new_y])
+        #left_lines.append(np.array([new_bottom_left_2]))
+      #left_lines.append(np.array([new_bottom_left_1]))
 
   return np.array(left_lines + right_lines)
 
@@ -221,8 +225,8 @@ def process_image(image, file_name=''):
   rho = 1 # distance resolution in pixels of the Hough grid
   theta = np.pi/180 # angular resolution in radians of the Hough grid
   threshold = 10     # minimum number of votes (intersections in Hough grid cell)
-  min_line_len = 30 #minimum number of pixels making up a line
-  max_line_gap = 150    # maximum gap in pixels between connectable line segments
+  min_line_len = 20 #minimum number of pixels making up a line
+  max_line_gap = 200    # maximum gap in pixels between connectable line segments
   lines = hough_lines(masked_edges, rho, theta, threshold, min_line_len, max_line_gap)
 
   # Extra optimization on line segments
