@@ -43,7 +43,7 @@ Original images vs. Color filtered images
 
 <img src="test_images/whiteCarLaneSwitch.jpg" width="240" alt="original Image" /> <img src="test_images_output/filtered_whiteCarLaneSwitch.jpg" width="240" alt="original Image" />
 
-#### 2. Apply gray scale
+#### 2. Apply gray scale and gaussian transformation
 Before detect the shape in the pictures, we need to apply the gray scale transformation on the color filtered images. Both the grayscale conversion and gaussian noice are applied at this step
 
 Original images vs. gray scaled images
@@ -77,7 +77,7 @@ Original images vs. Canny transformed images
 
 <img src="test_images/whiteCarLaneSwitch.jpg" width="240" alt="original Image" /> <img src="test_images_output/edges_whiteCarLaneSwitch.jpg" width="240" alt="original Image" />
 
-#### 4. Narrow the selection to car's lane
+#### 4. Region of Interest Selection
 This step is to keep the region defined by the ploygon, so that we only render the current car's lane
 
 Original images vs. marked edges
