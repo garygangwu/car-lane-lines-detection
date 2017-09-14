@@ -17,3 +17,48 @@ In the assignment, highway lanes are in either yellow or white. To remove noice,
 
 Original images vs. Color filtered images
 
+<img src="test_images/solidWhiteCurve.jpg" width="240" alt="original Image" /> <img src="test_images_output/filtered_solidWhiteCurve.jpg" width="240" alt="original Image" />
+
+<img src="test_images/solidWhiteRight.jpg" width="240" alt="original Image" /> <img src="test_images_output/filtered_solidWhiteRight.jpg" width="240" alt="original Image" />
+
+<img src="test_images/solidYellowCurve.jpg" width="240" alt="original Image" /> <img src="test_images_output/filtered_solidYellowCurve.jpg" width="240" alt="original Image" />
+
+<img src="test_images/solidYellowCurve2.jpg" width="240" alt="original Image" /> <img src="test_images_output/filtered_solidYellowCurve2.jpg" width="240" alt="original Image" />
+
+<img src="test_images/solidYellowLeft.jpg" width="240" alt="original Image" /> <img src="test_images_output/filtered_solidYellowLeft.jpg" width="240" alt="original Image" />
+
+<img src="test_images/whiteCarLaneSwitch.jpg" width="240" alt="original Image" /> <img src="test_images_output/filtered_whiteCarLaneSwitch.jpg" width="240" alt="original Image" />
+
+#### 2. Apply gray scale
+Before detect the shape in the pictures, we need to apply the gray scale transformation on the color filtered images. Both the grayscale conversion and gaussian noice are applied at this step
+
+Original images vs. gray scaled images
+
+<img src="test_images/solidWhiteCurve.jpg" width="240" alt="original Image" /> <img src="test_images_output/gray_solidWhiteCurve.jpg" width="240" alt="original Image" />
+
+<img src="test_images/solidWhiteRight.jpg" width="240" alt="original Image" /> <img src="test_images_output/gray_solidWhiteRight.jpg" width="240" alt="original Image" />
+
+<img src="test_images/solidYellowCurve.jpg" width="240" alt="original Image" /> <img src="test_images_output/gray_solidYellowCurve.jpg" width="240" alt="original Image" />
+
+<img src="test_images/solidYellowCurve2.jpg" width="240" alt="original Image" /> <img src="test_images_output/gray_solidYellowCurve2.jpg" width="240" alt="original Image" />
+
+<img src="test_images/solidYellowLeft.jpg" width="240" alt="original Image" /> <img src="test_images_output/gray_solidYellowLeft.jpg" width="240" alt="original Image" />
+
+<img src="test_images/whiteCarLaneSwitch.jpg" width="240" alt="original Image" /> <img src="test_images_output/gray_whiteCarLaneSwitch.jpg" width="240" alt="original Image" />
+
+#### 2. Canny edge detection
+Next is to detect edge with low error rate from the gray scaled images. Canny transformation has applied at this step.
+
+Original images vs. Canny transformed images
+
+<img src="test_images/solidWhiteCurve.jpg" width="240" alt="original Image" /> <img src="test_images_output/edges_solidWhiteCurve.jpg" width="240" alt="original Image" />
+
+<img src="test_images/solidWhiteRight.jpg" width="240" alt="original Image" /> <img src="test_images_output/edges_solidWhiteRight.jpg" width="240" alt="original Image" />
+
+<img src="test_images/solidYellowCurve.jpg" width="240" alt="original Image" /> <img src="test_images_output/edges_solidYellowCurve.jpg" width="240" alt="original Image" />
+
+<img src="test_images/solidYellowCurve2.jpg" width="240" alt="original Image" /> <img src="test_images_output/edges_solidYellowCurve2.jpg" width="240" alt="original Image" />
+
+<img src="test_images/solidYellowLeft.jpg" width="240" alt="original Image" /> <img src="test_images_output/edges_solidYellowLeft.jpg" width="240" alt="original Image" />
+
+<img src="test_images/whiteCarLaneSwitch.jpg" width="240" alt="original Image" /> <img src="test_images_output/edges_whiteCarLaneSwitch.jpg" width="240" alt="original Image" />
