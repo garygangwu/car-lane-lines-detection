@@ -9,17 +9,17 @@ import math
 from moviepy.editor import VideoFileClip
 
 def keep_only_line_color(img):
-  lower_yellow = np.array([102,192,0])
-  upper_yellow = np.array([255,255,204])
-  mask = cv2.inRange(img, lower_yellow, upper_yellow)
-  img_1 = cv2.bitwise_and(img, img, mask= mask)
+  lower = np.array([190,190,0])
+  upper = np.array([255,255,255])
+  yellow_mask = cv2.inRange(img, lower, upper)
 
-  lower_white = np.array([200,200,200])
-  upper_white = np.array([255,255,255])
-  mask = cv2.inRange(img, lower_white, upper_white)
-  img_2 = cv2.bitwise_and(img, img, mask= mask)
+  lower = np.array([200,200,200])
+  upper = np.array([255,255,255])
+  white_mask = cv2.inRange(img, lower, upper)
 
-  return weighted_img(img_1, img_2, 1.0, 1.0)
+  mask = cv2.bitwise_or(yellow_mask, white_mask)
+
+  return cv2.bitwise_and(img, img, mask = mask)
 
 
 def grayscale(img):
@@ -160,6 +160,8 @@ def process_image(image, file_name=''):
     [[(50,imshape[0]),(imshape[1]/2-50, imshape[0] * 0.6), (imshape[1]/2+50, imshape[0] * 0.6), (imshape[1]-50,imshape[0])]],
     dtype=np.int32)
   masked_edges = region_of_interest(edges, vertices)
+  if len(file_name) > 0:
+    mpimg.imsave('test_images_output/masked_edges_' + file_name, masked_edges)
 
   rho = 1 # distance resolution in pixels of the Hough grid
   theta = np.pi/180 # angular resolution in radians of the Hough grid
