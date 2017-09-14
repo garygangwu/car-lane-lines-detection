@@ -15,6 +15,20 @@ This repo contains my solution to Udacity's self-drving course project, [Finding
 
 In the assignment, highway lanes are in either yellow or white. To remove noice, the first step is to only select yellow and white color in the RGB space.
 
+```python
+  lower = np.array([190,190,0])
+  upper = np.array([255,255,255])
+  yellow_mask = cv2.inRange(img, lower, upper)
+
+  lower = np.array([200,200,200])
+  upper = np.array([255,255,255])
+  white_mask = cv2.inRange(img, lower, upper)
+
+  mask = cv2.bitwise_or(yellow_mask, white_mask)
+
+  cv2.bitwise_and(img, img, mask = mask)
+```
+
 Original images vs. Color filtered images
 
 <img src="test_images/solidWhiteCurve.jpg" width="240" alt="original Image" /> <img src="test_images_output/filtered_solidWhiteCurve.jpg" width="240" alt="original Image" />
@@ -93,6 +107,8 @@ Here are the input parameters to `cv2.HoughLinesP`
 ```
 
 #### 6. Filter out bad lines
+
+Due to noices (especailly in the video), there may be bad line segments included in the image. I used empirical filtering rules to detect obvious bad lines. For example, each line is formulized as `y = mx + b`. Based on the observation, the left lane's `m` is normally less than `-0.5`, while the right lane's `m` is greater than `0.5`. In addition, `b` value shall follow some patterns.
 
 #### 7. Draw the lanes on the original images
 
