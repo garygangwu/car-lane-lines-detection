@@ -129,20 +129,49 @@ Original images vs. marked edges
 <img src="test_images/whiteCarLaneSwitch.jpg" width="240" alt="original Image" /> <img src="test_images_output/whiteCarLaneSwitch.jpg" width="240" alt="original Image" />
 
 #### Video clips
+
+The video is processed as a stream of individual images
+
+```python
+  for file_name in os.listdir("test_videos/"):
+    clip = VideoFileClip('test_videos/' + file_name)
+    new_clip = clip.fl_image(process_image)
+    output_file = 'test_videos_output/' + file_name
+    new_clip.write_videofile(output_file, audio=False)
+```
+
 - [White Lanes Video](https://www.dropbox.com/s/bw9gah8jrgmcqth/solidWhiteRight.mp4?dl=0)
 - [Yellow Lanes Video](https://www.dropbox.com/s/penftep9t5ly1r2/solidYellowLeft.mp4?dl=0)
 - [Challenge Video](https://www.dropbox.com/s/bxpq2a8tralfqwt/challenge.mp4?dl=0)
 
 
 ### Potential Issues with the current pipeline
+The project was reasonably detect lanes in the videos, however there are a lot more thing that can be improved
 
-One potential shortcoming would be what would happen when ... 
+#### Handle Noices in the image
+In the `challenge` video, when the car drives through the shaped area under bushes or the lane is mixed with multiple colors on the groud, the current algorithm may detect multiple bad lines.  
 
-Another shortcoming could be ...
+#### The dashed lane line isn't drawn straightly sometimes
+There are multiple lines detected for a lane line, especially the dashed line. I still need to come up with an "averaged" line for that, otherwise the line doesn't look straight. This makes things even worse when we need to extend the line to the bottom for the dashed lane lines.
 
+Another thing is that it won't work for steep (up or down) roads because the region of interest mask is assumed from the center of the image.
+
+For steep roads, we first need to detect the horizontal line (between the sky and the earth) so that we can tell up to where the lines should extend.
 
 ### Future Improvements
 
-A possible improvement would be to ...
+#### Draw the "averaged" line along the lane
+I need to merge mulitple line segments into a long line with "averaged" `m` and `b` (`y = mx + b`). This can make the line looks a lot better
 
-Another potential improvement could be to ...
+#### Effective detect wrong lines
+In the `challenge` video, some bad lines are detected due to the noices in the images. I think this can be further filtered out based on the lane lines' pattern. For example we expects `m` and `b` of each line shall be consistent.
+
+### Handle curved lanes
+Although there is no curved lanes in the video, it is pretty common on the real roads. We may need to leverage perspective transformation and ploy fitting lines, rather than assumeing the lines are straight.
+
+## What if the region of interest mask is not in the center
+For many mountain roads with sharp turns, the region of interest may not be always in the center. We need to adjust it based on the shape of the roads
+
+### Handle steep roads (up or down) at San Francisco
+We may need to detect the boundary between the sky and land, so that we know where to stop and avoid drawing the lines to the sky. 
+
