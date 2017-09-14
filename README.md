@@ -1,6 +1,6 @@
 # **Finding Lane Lines on the Road** 
 
-Overview
+##Overview
 ---
 
 When we drive, we use our eyes to decide where to go.  The lines on the road that show us where the lanes are act as our constant reference for where to steer the vehicle.  Naturally, one of the first things we would like to do in developing a self-driving car is to automatically detect lane lines using an algorithm.
@@ -9,7 +9,7 @@ This repo contains my solution to Udacity's self-drving course project, [Finding
 
 ---
 
-### Pipeline Description
+## Pipeline Description
 
 #### 1. Color Filtering
 
@@ -128,7 +128,7 @@ Original images vs. marked edges
 
 <img src="test_images/whiteCarLaneSwitch.jpg" width="240" alt="original Image" /> <img src="test_images_output/whiteCarLaneSwitch.jpg" width="240" alt="original Image" />
 
-#### Video clips
+## Video clips
 
 The video is processed as a stream of individual images
 
@@ -144,8 +144,9 @@ The video is processed as a stream of individual images
 - [Yellow Lanes Video](https://www.dropbox.com/s/penftep9t5ly1r2/solidYellowLeft.mp4?dl=0)
 - [Challenge Video](https://www.dropbox.com/s/bxpq2a8tralfqwt/challenge.mp4?dl=0)
 
+---
 
-### Potential Issues with the current pipeline
+## Potential Issues with the current pipeline
 The project was reasonably detect lanes in the videos, however there are a lot more thing that can be improved
 
 #### Handle Noices in the image
@@ -158,7 +159,10 @@ Another thing is that it won't work for steep (up or down) roads because the reg
 
 For steep roads, we first need to detect the horizontal line (between the sky and the earth) so that we can tell up to where the lines should extend.
 
-### Future Improvements
+---
+
+## Future Improvements
+There is a clear gap to improve for the current algorithm to be used on the real road conditions. Below are just a few examples.
 
 #### Draw the "averaged" line along the lane
 I need to merge mulitple line segments into a long line with "averaged" `m` and `b` (`y = mx + b`). This can make the line looks a lot better
@@ -166,10 +170,10 @@ I need to merge mulitple line segments into a long line with "averaged" `m` and 
 #### Effective detect wrong lines
 In the `challenge` video, some bad lines are detected due to the noices in the images. I think this can be further filtered out based on the lane lines' pattern. For example we expects `m` and `b` of each line shall be consistent.
 
-### Handle curved lanes
+#### Handle curved lanes
 Although there is no curved lanes in the video, it is pretty common on the real roads. We may need to leverage perspective transformation and ploy fitting lines, rather than assumeing the lines are straight.
 
-## What if the region of interest mask is not in the center
+#### What if the region of interest mask is not in the center
 For many mountain roads with sharp turns, the region of interest may not be always in the center. We need to adjust it based on the shape of the roads
 
 ### Handle steep roads (up or down) at San Francisco
