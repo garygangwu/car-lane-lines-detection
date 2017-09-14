@@ -146,27 +146,21 @@ The video is processed as a stream of individual images
 
 
 ## Potential Issues with the current pipeline
-The project was reasonably detect lanes in the videos, however there are a lot more thing that can be improved
+The project was reasonably detect lanes in the videos, however there are a lot of things that can be improved
 
-#### Handle Noices in the image
-In the `challenge` video, when the car drives through the shaped area under bushes or the lane is mixed with multiple colors on the groud, the current algorithm may detect multiple bad lines.  
+#### Better handling noices in the image
+In the `challenge` video, when the car drives through the shadow area under trees or the lane is mixed with multiple colors on the groud, the current algorithm will capture bad line segments.  
 
 #### The dashed lane line isn't drawn straightly sometimes
-There are multiple lines detected for a lane line, especially the dashed line. I still need to come up with an "averaged" line for that, otherwise the line doesn't look straight. This makes things even worse when we need to extend the line to the bottom for the dashed lane lines.
-
-Another thing is that it won't work for steep (up or down) roads because the region of interest mask is assumed from the center of the image.
-
-For steep roads, we first need to detect the horizontal line (between the sky and the earth) so that we can tell up to where the lines should extend.
-
----
+There are multiple line segments detected for a lane line, especially the dashed line. I need to come up with an "averaged" line for that, otherwise the line doesn't look always straight (espeically in the videos). This makes things even worse when we need to extend the line to the bottom for the dashed lane lines.
 
 ## Future Improvements
-There is a clear gap to improve for the current algorithm to be used on the real road conditions. Below are just a few examples.
+There is a clear gap for the current algorithm to be used on the real road conditions.
 
 #### Draw the "averaged" line along the lane
 I need to merge mulitple line segments into a long line with "averaged" `m` and `b` (`y = mx + b`). This can make the line looks a lot better
 
-#### Effective detect wrong lines
+#### Effective detect bad line segments
 In the `challenge` video, some bad lines are detected due to the noices in the images. I think this can be further filtered out based on the lane lines' pattern. For example we expects `m` and `b` of each line shall be consistent.
 
 #### Handle curved lanes
