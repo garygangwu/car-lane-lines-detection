@@ -110,8 +110,20 @@ def weighted_img(img, initial_img, a=0.8, b=1., l=0.):
   return cv2.addWeighted(initial_img, a, img, b, l)
 
 
-def filter_incorrect_lines(lines, x_max_len, y_max_len):
-  ret = []
+def get_m_and_b_from_line(line):
+  x1 = line[0]
+  y1 = line[1]
+  x2 = line[2]
+  y2 = line[3]
+  if x1 == x2:
+    return 0, x1
+  m = (y2-y1) * 1.0 / (x2 - x1)
+  b = y1 * 1.0 - m * x1
+  return m, b
+
+def lines_optimization(lines, x_max_len, y_max_len):
+  left_lines = []
+  right_lines = []
   for line in lines:
     l = line[0]
     x1 = l[0]
@@ -120,21 +132,63 @@ def filter_incorrect_lines(lines, x_max_len, y_max_len):
     y2 = l[3]
     if x1 == x2:
       continue
-    m = (y2-y1) * 1.0 / (x2 - x1)
+    m, b = get_m_and_b_from_line(l)
     if (x1 > x_max_len / 2 or x2 > x_max_len / 2) and m <= 0.5:
       continue
     if (x1 <= x_max_len / 2 or x2 <= x_max_len / 2) and m >= -0.5:
       continue
 
-    b = y1 * 1.0 - m * x1
     x0 = -b / m
     if (x1 > x_max_len / 2 or x2 > x_max_len / 2) and x0 >= x_max_len * 0.3:
       continue
     if (x1 <= x_max_len / 2 or x2 <= x_max_len / 2) and x0 <= x_max_len * 0.7:
       continue
 
-    ret.append(line)
-  return np.array(ret)
+    if (x1 >= x2):
+      line[0][0], line[0][1], line[0][2], line[0][3] = line[0][2], line[0][3], line[0][0], line[0][1]
+
+    if m > 0:
+      right_lines.append(line)
+    else:
+      left_lines.append(line)
+
+  # Extend the line to the bottom of the image
+  right_lines = sorted(right_lines, key=lambda line: line[0][3])
+  left_lines = sorted(left_lines, key=lambda line: line[0][1])
+
+  if len(right_lines) > 0 and len(left_lines) > 0:
+    bottom_left    = left_lines[-1][0]
+    bottom_right   = right_lines[-1][0]
+    bottom_left_y  = bottom_left[1]
+    bottom_right_y = bottom_right[3]
+    if bottom_left_y > bottom_right_y:
+      m, b = get_m_and_b_from_line(bottom_right)
+      new_y = bottom_left_y
+      new_x = int((new_y - b) * 1.0 / m)
+      new_bottom_right_1 = np.array([bottom_right[0], bottom_right[1], new_x, new_y])
+      if len(right_lines) > 1:
+        bottom_right = right_lines[-2][0]
+        m, b = get_m_and_b_from_line(bottom_right)
+        new_y = bottom_left_y
+        new_x = int((new_y - b) * 1.0 / m)
+        new_bottom_right_2 = np.array([bottom_right[0], bottom_right[1], new_x, new_y])
+        left_lines.append(np.array([new_bottom_right_2]))
+      right_lines.append(np.array([new_bottom_right_1]))
+    else:
+      m, b = get_m_and_b_from_line(bottom_left)
+      new_y = bottom_right_y
+      new_x = int((new_y - b) * 1.0 / m)
+      new_bottom_left_1 = np.array([bottom_left[2], bottom_left[3], new_x, new_y])
+      if len(left_lines) > 1:
+        bottom_left = left_lines[-2][0]
+        m, b = get_m_and_b_from_line(bottom_left)
+        new_y = bottom_right_y
+        new_x = int((new_y - b) * 1.0 / m)
+        new_bottom_left_2 = np.array([bottom_left[0], bottom_left[1], new_x, new_y])
+        left_lines.append(np.array([new_bottom_left_2]))
+      left_lines.append(np.array([new_bottom_left_1]))
+
+  return np.array(left_lines + right_lines)
 
 
 def process_image(image, file_name=''):
@@ -166,11 +220,13 @@ def process_image(image, file_name=''):
 
   rho = 1 # distance resolution in pixels of the Hough grid
   theta = np.pi/180 # angular resolution in radians of the Hough grid
-  threshold = 5     # minimum number of votes (intersections in Hough grid cell)
-  min_line_len = 5 #minimum number of pixels making up a line
+  threshold = 10     # minimum number of votes (intersections in Hough grid cell)
+  min_line_len = 30 #minimum number of pixels making up a line
   max_line_gap = 150    # maximum gap in pixels between connectable line segments
   lines = hough_lines(masked_edges, rho, theta, threshold, min_line_len, max_line_gap)
-  lines = filter_incorrect_lines(lines, imshape[1], imshape[0])
+
+  # Extra optimization on line segments
+  lines = lines_optimization(lines, imshape[1], imshape[0])
 
   line_image = np.copy(image)*0
   draw_lines(line_image, lines, color=[255, 0, 0], thickness=5)
@@ -183,10 +239,8 @@ def images():
   for file_name in os.listdir("test_images/"):
     image = mpimg.imread('test_images/' + file_name)
     weighted_image = process_image(image, file_name=file_name)
-    print('This image is:', type(weighted_image), 'with dimensions:', weighted_image.shape)
-    #print(lines)
     mpimg.imsave('test_images_output/' + file_name, weighted_image)
-
+    print('Saved the new image to : ' + 'test_images_output/' + file_name)
 
 def videos():
   for file_name in os.listdir("test_videos/"):
