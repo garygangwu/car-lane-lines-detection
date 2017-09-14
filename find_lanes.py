@@ -147,13 +147,13 @@ def process_image(image, file_name=''):
     mpimg.imsave('test_images_output/filtered_' + file_name, filtered_color_image)
 
   gray = grayscale(filtered_color_image)
-  if len(file_name) > 0:
-    mpimg.imsave('test_images_output/gray_' + file_name, gray)
-
   blur_gray = gaussian_blur(gray, 5)
+  if len(file_name) > 0:
+    mpimg.imsave('test_images_output/gray_' + file_name, blur_gray)
+
   edges = canny(blur_gray, 50 , 150)
   if len(file_name) > 0:
-    mpimg.imsave('test_images_output/edges_' + file_name, blur_gray)
+    mpimg.imsave('test_images_output/edges_' + file_name, edges)
 
   imshape = image.shape
   vertices = np.array(
