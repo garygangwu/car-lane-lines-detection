@@ -166,31 +166,23 @@ def lines_optimization(lines, x_max_len, y_max_len):
       new_y = bottom_left_y
       new_x = int((new_y - b) * 1.0 / m)
       bottom_right[2], bottom_right[3] = new_x, new_y
-      #new_bottom_right_1 = np.array([bottom_right[0], bottom_right[1], new_x, new_y])
       if len(right_lines) > 1:
         bottom_right = right_lines[-2][0]
         m, b = get_m_and_b_from_line(bottom_right)
         new_y = bottom_left_y
         new_x = int((new_y - b) * 1.0 / m)
-        #new_bottom_right_2 = np.array([bottom_right[0], bottom_right[1], new_x, new_y])
         bottom_right[2], bottom_right[3] = new_x, new_y
-        #left_lines.append(np.array([new_bottom_right_2]))
-      #right_lines.append(np.array([new_bottom_right_1]))
     else:
       m, b = get_m_and_b_from_line(bottom_left)
       new_y = bottom_right_y
       new_x = int((new_y - b) * 1.0 / m)
       bottom_left[2], bottom_left[3] = new_x, new_y
-      #new_bottom_left_1 = np.array([bottom_left[2], bottom_left[3], new_x, new_y])
       if len(left_lines) > 1:
         bottom_left = left_lines[-2][0]
         m, b = get_m_and_b_from_line(bottom_left)
         new_y = bottom_right_y
         new_x = int((new_y - b) * 1.0 / m)
         bottom_left[2], bottom_left[3] = new_x, new_y
-        #new_bottom_left_2 = np.array([bottom_left[0], bottom_left[1], new_x, new_y])
-        #left_lines.append(np.array([new_bottom_left_2]))
-      #left_lines.append(np.array([new_bottom_left_1]))
 
   return np.array(left_lines + right_lines)
 
