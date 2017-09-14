@@ -1,6 +1,6 @@
 # **Finding Lane Lines on the Road** 
 
-##Overview
+## Overview
 ---
 
 When we drive, we use our eyes to decide where to go.  The lines on the road that show us where the lanes are act as our constant reference for where to steer the vehicle.  Naturally, one of the first things we would like to do in developing a self-driving car is to automatically detect lane lines using an algorithm.
@@ -176,6 +176,6 @@ Although there is no curved lanes in the video, it is pretty common on the real 
 #### What if the region of interest mask is not in the center
 For many mountain roads with sharp turns, the region of interest may not be always in the center. We need to adjust it based on the shape of the roads
 
-### Handle steep roads (up or down) at San Francisco
+#### Handle steep roads (up or down) at San Francisco
 We may need to detect the boundary between the sky and land, so that we know where to stop and avoid drawing the lines to the sky. 
 
