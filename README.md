@@ -13,20 +13,20 @@ This repo contains my solution to Udacity's self-drving course project, [Finding
 
 #### 1. Color Filtering
 
-In the assignment, highway lanes are in either yellow or white. To remove noice, the first step is to only select yellow and white color in the RGB space.
+In the assignment, highway lanes are in either yellow or white. To remove noice, the first step is to only select yellow and white color in the RGB space. With additional research, HSL color space performs particular well in detecting yellow and white lanes under shades, and which helps improving the quality in finding lanes in the challenging videos
 
 ```python
-  lower = np.array([190,190,0])
-  upper = np.array([255,255,255])
-  yellow_mask = cv2.inRange(img, lower, upper)
+  converted_img = cv2.cvtColor(img, cv2.COLOR_RGB2HLS)
+  lower = np.array([ 10,  0,100])
+  upper = np.array([ 40,255,255])
+  yellow_mask = cv2.inRange(converted_img, lower, upper)
 
-  lower = np.array([200,200,200])
+  lower = np.array([  0, 200, 0])
   upper = np.array([255,255,255])
-  white_mask = cv2.inRange(img, lower, upper)
+  white_mask = cv2.inRange(converted_img, lower, upper)
 
   mask = cv2.bitwise_or(yellow_mask, white_mask)
-
-  cv2.bitwise_and(img, img, mask = mask)
+  masked_img = cv2.bitwise_and(converted_img, converted_img, mask = mask)
 ```
 
 Original images vs. Color filtered images
@@ -127,6 +127,6 @@ Original images vs. marked edges
 <img src="test_images/whiteCarLaneSwitch.jpg" width="240" alt="original Image" /> <img src="test_images_output/whiteCarLaneSwitch.jpg" width="240" alt="original Image" />
 
 #### Video clips
-- [White Lanes Video](test_videos_output/solidWhiteRight.mp4)
-- [Yellow Lanes Video](test_videos_output/solidYellowLeft.mp4)
-- [Challenge Video](test_videos_output/challenge.mp4)
+- [White Lanes Video](https://www.dropbox.com/s/bw9gah8jrgmcqth/solidWhiteRight.mp4?dl=0)
+- [Yellow Lanes Video](https://www.dropbox.com/s/penftep9t5ly1r2/solidYellowLeft.mp4?dl=0)
+- [Challenge Video](https://www.dropbox.com/s/bxpq2a8tralfqwt/challenge.mp4?dl=0)
