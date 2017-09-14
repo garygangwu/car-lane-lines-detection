@@ -132,3 +132,17 @@ Original images vs. marked edges
 - [White Lanes Video](https://www.dropbox.com/s/bw9gah8jrgmcqth/solidWhiteRight.mp4?dl=0)
 - [Yellow Lanes Video](https://www.dropbox.com/s/penftep9t5ly1r2/solidYellowLeft.mp4?dl=0)
 - [Challenge Video](https://www.dropbox.com/s/bxpq2a8tralfqwt/challenge.mp4?dl=0)
+
+
+### Potential Issues with the current pipeline
+
+One potential shortcoming would be what would happen when ... 
+
+Another shortcoming could be ...
+
+
+### Future Improvements
+
+A possible improvement would be to ...
+
+Another potential improvement could be to ...
