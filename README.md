@@ -125,3 +125,8 @@ Original images vs. marked edges
 <img src="test_images/solidYellowLeft.jpg" width="240" alt="original Image" /> <img src="test_images_output/solidYellowLeft.jpg" width="240" alt="original Image" />
 
 <img src="test_images/whiteCarLaneSwitch.jpg" width="240" alt="original Image" /> <img src="test_images_output/whiteCarLaneSwitch.jpg" width="240" alt="original Image" />
+
+#### Video clips
+- [White Lanes Video](test_videos_output/solidWhiteRight.mp4)
+- [Yellow Lanes Video](test_videos_output/solidYellowLeft.mp4)
+- [Challenge Video](test_videos_output/challenge.mp4)
