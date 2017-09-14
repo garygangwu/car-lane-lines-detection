@@ -101,14 +101,16 @@ Here are the input parameters to `cv2.HoughLinesP`
 ```python
   rho = 1
   theta = np.pi/180 
-  threshold = 5     
-  min_line_len = 5 
-  max_line_gap = 150    # A big gap is needed for the tolerance of the dashed line
+  threshold = 10    
+  min_line_len = 20 
+  max_line_gap = 200    # A big gap is needed for the tolerance of the dashed line
 ```
 
-#### 6. Filter out bad lines
+#### 6. Line optimization: filter out bad ones and extend the lines for the dashed lane
 
-Due to noices (especailly in the video), there may be bad line segments included in the image. I used empirical filtering rules to detect obvious bad lines. For example, each line is formulized as `y = mx + b`. Based on the observation, the left lane's `m` is normally less than `-0.5`, while the right lane's `m` is greater than `0.5`. In addition, `b` value shall follow some patterns.
+Due to noices (especailly in the video), there may be bad line segments included in the image. I used empirical filtering rules to detect obvious bad lines. For example, each line is formulized as `y = mx + b`. Based on the observation, the left lane's `m` is normally less than `-0.5`, while the right lane's `m` is greater than `0.5`. In addition, `b` value shall follow some patterns. For example, when `y = 0`, the cooresponding `x` shall fall in corresponding expected ranges for left and right lane.
+
+For the dashed lane, we may miss the bottom parts in line rendering. We extend the bottom lines with same `m` / `b` parameters for a consistent length for left and right lanes.
 
 #### 7. Draw the lanes on the original images
 
